@@ -61,8 +61,9 @@ public class Editor extends Application {
                 if (characterTyped.length() > 0 && characterTyped.charAt(0) != 8) {
                    // list.addLast(characterTyped);
 //setText arg was list.ToString()
-                    textfornode.setText(characterTyped);
+                  //  textfornode.setText(characterTyped);
                     bb.insertValue(textfornode);
+                    textfornode.setText(bb.toString());
                     keyEvent.consume();
 
                     /*
@@ -94,6 +95,15 @@ public class Editor extends Application {
             displayText.setX(textLeft);
             displayText.setY(textTop);
              displayText.toFront(); */
+                //
+                double textHeight = textfornode.getLayoutBounds().getHeight();
+                double textWidth = textfornode.getLayoutBounds().getWidth();
+                double textTop = 0; //= textCenterY - textHeight /2;
+                double textLeft = 0; //textCenterX - textWidth /2;
+                textfornode.setX(textLeft);
+                textfornode.setY(textTop);
+                textfornode.toFront();
+
             }
         }
 
