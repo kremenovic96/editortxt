@@ -1,5 +1,4 @@
 package editor;
-// s
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.VPos;
@@ -11,24 +10,19 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.input.KeyCode;
-// trying a thing with lists
-//import java.util.Arrays;
 import java.util.LinkedList;
 
 public class Editor extends Application {
+    Group root;
     private static final int WINDOW_WIDTH = 500;
     private static final int WINDOW_HEIGHT = 500;
-    //LinkedList<String> list = new LinkedList<String>();
-    StringBuilder aa = new StringBuilder();
-    mytext bb = new mytext();
-        private class KeyEventHandler implements EventHandler<KeyEvent> {
+    LinkedList<String> list = new LinkedList<String>();
+    private class KeyEventHandler implements EventHandler<KeyEvent> {
             int textCenterX;
             int textCenterY;
             private static final int STARTING_FONT_SIZE = 20;
             private static final int STARTING_TEXT_POSITION_X = 250;
             private static final int STARTING_TEXT_POSITION_Y = 10;
-    //   private Text displayText = new Text(STARTING_TEXT_POSITION_X,STARTING_TEXT_POSITION_Y,"");
-            //
             private Text textfornode;
             private int fontSize = STARTING_FONT_SIZE;
             private String fontName = "Verdana";
@@ -36,16 +30,10 @@ public class Editor extends Application {
       KeyEventHandler(Group root,int windowWidth,int windowHeight){
           textCenterX = windowWidth / 2;
           textCenterY = windowHeight / 2;
-          //third arg for text was ""
-        /*  displayText = new Text(textCenterX,textCenterY,"");
-          displayText.setTextOrigin(VPos.TOP);
-          displayText.setFont(Font.font(fontName,fontSize));
-          root.getChildren().add(displayText);  */
           textfornode = new Text(textCenterX,textCenterY,"");
           textfornode.setTextOrigin(VPos.TOP);
           textfornode.setFont(Font.font(fontName,fontSize));
           root.getChildren().add(textfornode);
-
       }
             @Override
            public void handle(KeyEvent keyEvent) {
@@ -54,22 +42,15 @@ public class Editor extends Application {
                 //
                 if (characterTyped.charAt(0) == 8){
 
-                   /* aa.deleteCharAt(aa.length() -1 );
-                    displayText.setText(aa.toString()); */
+                    root.getChildren().remove(textfornode);
+                    list.removeLast();
                 }
-                //
                 if (characterTyped.length() > 0 && characterTyped.charAt(0) != 8) {
-                   // list.addLast(characterTyped);
-//setText arg was list.ToString()
-                  //  textfornode.setText(characterTyped);
-                    bb.insertValue(textfornode);
-                    textfornode.setText(bb.toString());
-                    keyEvent.consume();
-
-                    /*
-                    aa.append(characterTyped);
-                    displayText.setText(aa.toString());
-                    keyEvent.consume(); */
+                    Text tmp = new Text(250,250,characterTyped);
+    root.getChildren().add(tmp);
+                    list.add(characterTyped);
+                    textfornode = new Text(400,400,"");
+                    textfornode.setText(list.toString());
                 }
                 centerText();
             }
@@ -88,14 +69,6 @@ public class Editor extends Application {
                 }
             }
             private void centerText() {
-         /*   double textHeight = displayText.getLayoutBounds().getHeight();
-            double textWidth = displayText.getLayoutBounds().getWidth();
-                double textTop = 0; //= textCenterY - textHeight /2;
-             double textLeft = 0; //textCenterX - textWidth /2;
-            displayText.setX(textLeft);
-            displayText.setY(textTop);
-             displayText.toFront(); */
-                //
                 double textHeight = textfornode.getLayoutBounds().getHeight();
                 double textWidth = textfornode.getLayoutBounds().getWidth();
                 double textTop = 0; //= textCenterY - textHeight /2;
@@ -106,12 +79,9 @@ public class Editor extends Application {
 
             }
         }
-
-
-
     @Override
     public void start(Stage primaryStage) {
-        Group root = new Group();
+         root = new Group();
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT, Color.WHITE);
         EventHandler<KeyEvent> keyEventHandler = new KeyEventHandler(root,WINDOW_WIDTH,WINDOW_HEIGHT);
         scene.setOnKeyTyped(keyEventHandler);

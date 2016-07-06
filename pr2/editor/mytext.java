@@ -100,6 +100,10 @@ public class mytext {
         return out;
 
     }
+    public String getString(){
+        return sentinel.getNext().getVal().getText();
+
+    }
     public int size(){
         return size;
     }
